@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'question_id',
             'answer_name',
-            'is_active',
+            'is_correct',
             'created_at',
             // 'modified_by',
 

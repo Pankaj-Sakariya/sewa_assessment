@@ -33,7 +33,7 @@ class Answer extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['question_id', 'answer_name', 'is_active'], 'required'],
+            [['question_id', 'answer_name', 'is_correct'], 'required'],
             [['question_id', 'is_active'], 'integer'],
             [['created_at', 'modified_by'], 'safe'],
             [['answer_name'], 'string', 'max' => 255]
@@ -49,7 +49,7 @@ class Answer extends \yii\db\ActiveRecord
             'id' => 'ID',
             'question_id' => 'Question ID',
             'answer_name' => 'Answer Name',
-            'is_active' => 'Is Active',
+            'is_correct' => 'Is Correct',
             'created_at' => 'Created At',
             'modified_by' => 'Modified By',
         ];

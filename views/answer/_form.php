@@ -16,8 +16,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'answer_name')->textInput(['maxlength' => true]) ?>
 
-    <?php  $model->is_active = '0'; ?>
-    <?= $form->field($model, 'is_active')->radioList(['1'=>'Active',0=>'InActive'])->label(''); ?>
+    <?php  $model->is_correct = '0'; ?>
+    <?= $form->field($model, 'is_correct')->radioList(['1'=>'Active',0=>'InActive'])->label(''); ?>
 
 <!--    --><?//= $form->field($model, 'created_at')->textInput() ?>
 <!---->

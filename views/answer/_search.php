@@ -21,7 +21,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'answer_name') ?>
 
-    <?= $form->field($model, 'is_active') ?>
+    <?= $form->field($model, 'is_correct') ?>
 
     <?= $form->field($model, 'created_at') ?>
 

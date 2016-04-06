@@ -6,6 +6,95 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model app\models\Topic */
 /* @var $form yii\widgets\ActiveForm */
+
+use kartik\widgets\Select2;
+$data = [
+    "red" => "red",
+    "green" => "green",
+    "blue" => "blue",
+    "orange" => "orange",
+    "white" => "white",
+    "black" => "black",
+    "purple" => "purple",
+    "cyan" => "cyan",
+    "teal" => "teal"
+];
+
+// Tagging support Multiple
+echo '<label class="control-label">Tag Multiple</label>';
+echo Select2::widget([
+    'name' => 'color_1',
+    'value' => ['red', 'green'], // initial value
+    'data' => $data,
+    'options' => ['placeholder' => 'Select a color ...', 'multiple' => true],
+    'pluginOptions' => [
+        'tags' => true,
+        'maximumInputLength' => 10
+    ],
+]);
+
+// Tagging support Multiple (maintain the order of selection)
+echo '<label class="control-label">Tag Multiple</label>';
+echo Select2::widget([
+    'name' => 'color_2',
+    'value' => ['red', 'green'], // initial value
+    'data' => $data,
+    'maintainOrder' => true,
+    'options' => ['placeholder' => 'Select a color ...', 'multiple' => true],
+    'pluginOptions' => [
+        'tags' => true,
+        'maximumInputLength' => 10
+    ],
+]);
+
+// Tagging support (Multiple) for an update scenario that maintains the order of
+// selected tags on initialization when the (maintain the order of selection)
+echo '<label class="control-label">Tag Multiple</label>';
+echo Select2::widget([
+    'name' => 'color_2a',
+    'value' => ['teal', 'green', 'red'], // initial value (will be ordered accordingly and pushed to the top)
+    'data' => $data,
+    'maintainOrder' => true,
+    'options' => ['placeholder' => 'Select a color ...', 'multiple' => true],
+    'pluginOptions' => [
+        'tags' => true,
+        'maximumInputLength' => 10
+    ],
+]);
+
+// Tagging support Multiple (maintain the order of selection)
+echo '<label class="control-label">Tag Multiple</label>';
+echo Select2::widget([
+    'name' => 'color_3',
+    'value' => ['red', 'green'], // initial value
+    'data' => $data,
+    'maintainOrder' => true,
+    'toggleAllSettings' => [
+        'selectLabel' => '<i class="glyphicon glyphicon-ok-circle"></i> Tag All',
+        'unselectLabel' => '<i class="glyphicon glyphicon-remove-circle"></i> Untag All',
+        'selectOptions' => ['class' => 'text-success'],
+        'unselectOptions' => ['class' => 'text-danger'],
+    ],
+    'options' => ['placeholder' => 'Select a color ...', 'multiple' => true],
+    'pluginOptions' => [
+        'tags' => true,
+        'maximumInputLength' => 10
+    ],
+]);
+
+// Tagging support Single
+echo '<label class="control-label">Tag Single</label>';
+echo Select2::widget([
+    'name' => 'color_3',
+    'value' => 'red', // initial value
+    'data' => $data,
+    'options' => ['placeholder' => 'Select a color ...'],
+    'pluginOptions' => [
+        'tags' => true,
+        'tokenSeparators' => [',', ' '],
+        'maximumInputLength' => 10
+    ],
+]);
 ?>
 
 <div class="topic-form">
