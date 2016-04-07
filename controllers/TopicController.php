@@ -67,7 +67,7 @@ class TopicController extends Controller
 //    }
 
     
-    function Stringfunction(){
+    function stringfunction(){
         if(isset($_POST['Topic']['subject_id'])){
             $_POST['Topic']['subject_id'] = json_encode($_POST['Topic']['subject_id']);
         }
@@ -80,9 +80,9 @@ class TopicController extends Controller
     public function actionCreate()
     {
         $model = new Topic();
-        $this->Stringfunction();
+        $this->stringfunction();
        
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load($_POST) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -100,8 +100,8 @@ class TopicController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $this->Stringfunction();
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        $this->stringfunction();
+        if ($model->load($_POST) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [

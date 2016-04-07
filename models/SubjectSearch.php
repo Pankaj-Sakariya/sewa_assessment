@@ -63,6 +63,7 @@ class SubjectSearch extends Subject
         ]);
 
         $query->andFilterWhere(['like', 'subject_name', $this->subject_name]);
+        //$query->andFilterWhere(['like', 'subject_id', $this->subject_id]);
 
         return $dataProvider;
     }
