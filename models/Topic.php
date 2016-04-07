@@ -35,8 +35,8 @@ class Topic extends \yii\db\ActiveRecord
     {
         return [
             [['subject_id', 'topic_name', 'number_of_question_to_be_ask', 'is_active'], 'required'],
-            [['subject_id', 'number_of_question_to_be_ask', 'is_active'], 'integer'],
-            [['created_at', 'modified_by'], 'safe'],
+            [[ 'number_of_question_to_be_ask', 'is_active'], 'integer'],
+            [['created_at', 'modified_by','subject_id'], 'safe'],
             [['topic_name'], 'string', 'max' => 255],
             ['topic_name', 'unique','message'=>'Topic Name already exists!'],
 

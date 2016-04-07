@@ -53,6 +53,25 @@ class TopicController extends Controller
         ]);
     }
 
+    
+    
+//        
+//    function listboxCombine()
+//    {   
+////        display_array($_POST);
+////        exit;
+//        if(isset($_POST['Topic']['subject_id']))
+//        {   
+//            $_POST['Topic']['ict_device'] = json_encode($_POST['Topic']['ict_device']);
+//        }
+//    }
+
+    
+    function Stringfunction(){
+        if(isset($_POST['Topic']['subject_id'])){
+            $_POST['Topic']['subject_id'] = json_encode($_POST['Topic']['subject_id']);
+        }
+    }
     /**
      * Creates a new Topic model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -61,7 +80,8 @@ class TopicController extends Controller
     public function actionCreate()
     {
         $model = new Topic();
-
+        $this->Stringfunction();
+       
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
@@ -80,7 +100,7 @@ class TopicController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+        $this->Stringfunction();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {

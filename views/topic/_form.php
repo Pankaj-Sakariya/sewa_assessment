@@ -14,18 +14,15 @@ use kartik\select2\Select2;
 
 
     <?php $form = ActiveForm::begin(); ?>
-<?php
-echo $form->field($model, 'subject_id')->widget(Select2::classname(), [
-yii\helpers\ArrayHelper::map(app\models\Subject::find()->all(), 'id', 'subject_name'),
-    'language' => 'de',
-    'options' => ['placeholder' => 'Select a state ...'],
-    'pluginOptions' => [
-        'allowClear' => true
-    ],
-]);
-
-?>
-    <?= $form->field($model, 'subject_id')->dropDownList(\yii\helpers\ArrayHelper::map(\app\models\Subject::find()->where(['is_active' => '1'])->all(), 'id', 'subject_name')) ?>
+   <?= $form->field($model, 'subject_id')->widget(Select2::classname(), [
+            'language' => 'en',
+            'data' => yii\helpers\ArrayHelper::map(app\models\Subject::find()->where(['is_active' => '1'])->all(), 'id', 'subject_name'),
+            'options' => ['placeholder' => 'Select Subject','multiple' => true],
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+        ]);
+        ?>
 
     <?= $form->field($model, 'topic_name')->textInput(['maxlength' => true]) ?>
 
