@@ -20,8 +20,11 @@ AppAsset::register($this);
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
+
 </head>
+
 <body>
+
 <?php $this->beginBody() ?>
 
 <div class="wrap">
@@ -61,7 +64,7 @@ AppAsset::register($this);
 
                     '<li class="divider"></li>',
 
-                    ['label' => 'Exam Setting', 'url' => '#'],
+                    ['label' => 'Exam Setting', 'url' => \yii\helpers\Url::to(['/exam-basic-information/index'])],
                 ],
                 ],
             ['label' => 'Contact', 'url' => ['/site/contact']],
@@ -82,6 +85,72 @@ AppAsset::register($this);
     NavBar::end();
     ?>
 
+    <script>
+        function field_changed($mthis,$field,$container)
+        {
+
+            var selectedValue =  $mthis.value;
+            //alert(selectedValue);
+
+//        alert(selectedValue);
+
+            //var onchange = $("[name='"+$field+"']").attr('onchange');
+            //alert(onchange);
+
+            $.ajax({
+
+//                url: '<?php //echo Yii::$app->request->baseUrl. '/question/create' ?>//',
+                type: 'post',
+              // type: "GET",
+                url: 'state-changed',
+                data: {'value': selectedValue,'field': $field,'container': $container},
+                success: function(data) {
+                    // process data
+                   alert($container);
+
+//                alert(data);
+                    document.getElementById($container).innerHTML = data;
+
+
+                }
+            });
+        }
+
+    </script>
+
+
+    <script>
+
+
+//    function subject_changed($container)
+//    {
+//
+//        var selectedValue =  $("#exambasicinformation-subject_id").val();
+//
+//
+//        $.ajax({
+//
+//                type: 'GET',
+//                url: '<?php //echo \yii\helpers\Url::to(["topic/topic-changed"]) ?>//',
+//                data: {'value': selectedValue },
+//                success: function(data) {
+//
+//                    $("#"+$container).html(data);
+//
+//
+//                }
+//            });
+//    }
+
+
+    </script>
+
+
+
+
+
+
+
     <div class="container">
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
@@ -99,6 +168,8 @@ AppAsset::register($this);
 </footer>
 
 <?php $this->endBody() ?>
+
+<!--<script src="/web/js/jquery.min.js"></script>-->
 </body>
 </html>
 <?php $this->endPage() ?>
