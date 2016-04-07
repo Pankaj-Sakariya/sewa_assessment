@@ -26,18 +26,54 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-//            'subject_id',
+        //    'subject_id',
             [
                 'attribute'=>'subject_id',
                 'content'=>function($data){
-                    $value = \app\models\Subject::find()->where(['id'=>$data->subject_id])->one();
-//                    display_array($value);
-                    $final_value= $value!='null'?$value:'';
-                    return $final_value->subject_name;
+                    try {
+                        $modelm = app\models\Subject::find()->select("subject_name")
+                                        ->where(["IN", "id", json_decode($data->subject_id)])->all();
 
-//                    return  check_active_status($data);
+                        $mstringn = "";
+                        for ($im = 0; $im < count($modelm); $im++) {
+                            if ($im == 0) {
+                                $mstringn = $mstringn . "" . $modelm[$im]->subject_name;
+                            } else {
+                                $mstringn = $mstringn . " , " . $modelm[$im]->subject_name;
+                            }
+                        }
+                        return $mstringn;
+                    } catch (Exception $exc) {
+                        
+                    }
                 }
             ],
+                    
+//             [
+//                'attribute' => 'subject_id',
+//                'filter' => "",
+//                'content' => function($data) {
+////                    display_array($data);
+////                    exit;
+//
+//                    try {
+//                        $modelm = app\models\Subject::find()->select("subject_name")
+//                                        ->where(["IN", "id", json_decode($data->subject_id)])->all();
+//
+//                        $mstringn = "";
+//                        for ($im = 0; $im < count($modelm); $im++) {
+//                            if ($im == 0) {
+//                                $mstringn = $mstringn . "" . $modelm[$im]->subject_name;
+//                            } else {
+//                                $mstringn = $mstringn . " , " . $modelm[$im]->subject_name;
+//                            }
+//                        }
+//                        return $mstringn;
+//                    } catch (Exception $exc) {
+//                        
+//                    }
+//                }
+//                    ],       
             'topic_name',
             'number_of_question_to_be_ask',
 //            'is_active',
