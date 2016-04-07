@@ -12,7 +12,7 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
-<!--    --><?//= $form->field($model, 'topic_id')->textInput() ?>
+   
     <?= $form->field($model,'topic_id')->dropDownList(\yii\helpers\ArrayHelper::map(\app\models\Topic::find()->where(['is_active'=>'1'])->all(),'id','topic_name'),['prompt'=>'Select Topic'])?>
 
     <?= $form->field($model, 'question_name')->textarea(['rows' => 6]) ?>
