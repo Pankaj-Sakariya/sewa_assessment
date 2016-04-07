@@ -53,7 +53,88 @@ class TopicController extends Controller
         ]);
     }
 
-    
+
+
+    function actionTopicChanged()
+    {
+        $value = $_GET['value'];
+        $topicModel = Topic::find()->where(['is_active' => '1']);
+        $topicModel->andFilterWhere(['LIKE', 'subject_id', '"' . $value . '"']);
+        $topicModel = $topicModel->all();
+        ?>
+
+        <table id="table_topic" class="table table-bordered" xmlns="http://www.w3.org/1999/html">
+        <thead>
+        <tr>
+            <th>
+                Topic Name
+            </th>
+            <th>
+                Number of questions to be asked
+            </th>
+
+
+        </tr>
+        </thead>
+        <?php
+        $i =0;
+        for ($ti = 0; $ti < count($topicModel); $ti++) {
+            $topicModelSingle = $topicModel[$ti];
+            ?>
+            <tr>
+                <td>
+                    <?php echo $topicModelSingle->topic_name; ?>
+                </td>
+                <td>
+                    <input type="number" id = "number_of_question_to_be_ask" value="<?php echo $topicModelSingle->number_of_question_to_be_ask; ?>"class="form-control" onchange=number_of_question_changed()>
+                </td>
+
+            </tr>
+            <script>
+                function number_of_question_changed()
+                {
+                    var select_val =document.getElementById("number_of_question_to_be_ask").value;
+                }
+
+            </script>
+                 <?php
+                $i = $i + $topicModelSingle->number_of_question_to_be_ask;
+                ?>
+
+            <?php
+            }
+           ?>
+           <tr>
+               <th>Total</th>
+               <th><?php echo $i ?></th>
+           </tr>
+        </table>
+
+        <script>
+
+
+            function number_of_question_changed() {
+
+
+//                $( '#table_topic' ).on( 'change' , 'input[type="number"]' ,function(){
+//                    alert( 'Event fired' );
+//                });
+               // alert("d"+document.getElementById("number_of_question_to_be_ask).value)
+                var no_of_question_for_exam =  document.getElementById("exambasicinformation-no_of_question_for_exam").value;
+               // alert(no_of_question_for_exam);
+              var select=  document.getElementById("number_of_question_to_be_ask").value;
+
+                alert( <?php echo "Total = ".$i;?> "," + no_of_question_for_exam);
+
+            }
+
+
+        </script>
+
+        <?php
+
+    }
+
     
 //        
 //    function listboxCombine()
@@ -81,8 +162,9 @@ class TopicController extends Controller
     {
         $model = new Topic();
         $this->Stringfunction();
-       
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+//       display_array($_POST);
+//        exit;
+        if ($model->load($_POST) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -101,7 +183,7 @@ class TopicController extends Controller
     {
         $model = $this->findModel($id);
         $this->Stringfunction();
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load($_POST) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [

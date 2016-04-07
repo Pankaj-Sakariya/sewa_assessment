@@ -11,11 +11,17 @@ use kartik\select2\Select2;
 /* @var $model app\models\Topic */
 /* @var $form yii\widgets\ActiveForm */
 ?>
+    
 
+ <?php $form = ActiveForm::begin(); ?>
 
-    <?php $form = ActiveForm::begin(); ?>
+ <?php if($model->isNewRecord == false){
+     $model->subject_id =isset($model->subject_id)?json_decode($model->subject_id):"";
+ }?>
    <?= $form->field($model, 'subject_id')->widget(Select2::classname(), [
             'language' => 'en',
+            //'name' => isset($model->subject_id)?json_decode($model->subject_id):"",
+//            'value'=>,
             'data' => yii\helpers\ArrayHelper::map(app\models\Subject::find()->where(['is_active' => '1'])->all(), 'id', 'subject_name'),
             'options' => ['placeholder' => 'Select Subject','multiple' => true],
             'pluginOptions' => [

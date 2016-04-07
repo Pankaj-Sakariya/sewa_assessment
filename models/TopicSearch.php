@@ -18,8 +18,8 @@ class TopicSearch extends Topic
     public function rules()
     {
         return [
-            [['id', 'subject_id', 'number_of_question_to_be_ask', 'is_active'], 'integer'],
-            [['topic_name', 'created_at', 'modified_by'], 'safe'],
+            [['id',  'number_of_question_to_be_ask', 'is_active'], 'integer'],
+            [['topic_name', 'created_at', 'modified_by','subject_id',], 'safe'],
         ];
     }
 
