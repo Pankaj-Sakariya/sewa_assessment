@@ -10,14 +10,15 @@ use Yii;
  * @property integer $id
  * @property integer $topic_id
  * @property string $question_name
- * @property string $image
  * @property integer $weightage_for_question
  * @property integer $number_of_answer
+ * @property integer $correct_answer
  * @property integer $is_active
  * @property string $created_at
  * @property string $modified_by
  *
  * @property Answer[] $answers
+ * @property Answer $correctAnswer
  * @property Topic $topic
  */
 class Question extends \yii\db\ActiveRecord
@@ -36,12 +37,17 @@ class Question extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-//            [['topic_id', 'question_name', 'image', 'weightage_for_question', 'number_of_answer', 'is_active', 'created_at'], 'required'],
-            [['topic_id', 'weightage_for_question', 'number_of_answer', 'is_active'], 'integer'],
-            [['question_name'], 'string'],
-            [['topic_id', 'question_name','weightage_for_question','number_of_answer','is_active','created_at', 'modified_by'], 'safe'],
-            [['image'], 'file'],
-            [['topic_id'], 'exist', 'skipOnError' => true, 'targetClass' => Topic::className(), 'targetAttribute' => ['topic_id' => 'id']],
+            [['topic_id', 'question_name', 'weightage_for_question', 'is_active'], 'required'],
+            [[ 'weightage_for_question'], 'integer'],
+            
+            //Topic Name validation
+            ['weightage_for_question', 'match' ,
+                'pattern'=> '/^[0-9]+$/u',
+                'message'=> 'This field can contain only [0-9].'],
+            //[['question_name'], 'string'],
+            [['topic_id', 'question_name', 'weightage_for_question', 'is_active','created_at', 'modified_by'], 'safe']
+           
+            
         ];
     }
 
@@ -52,11 +58,11 @@ class Question extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'topic_id' => 'Topic ID',
+            'topic_id' => 'Topic Name',
             'question_name' => 'Question Name',
-            'image' => 'Image',
             'weightage_for_question' => 'Weightage For Question',
-            'number_of_answer' => 'Number Of Answer',
+           // 'number_of_answer' => 'Number Of Answer',
+            'correct_answer' => 'Correct Answer',
             'is_active' => 'Is Active',
             'created_at' => 'Created At',
             'modified_by' => 'Modified By',
@@ -74,19 +80,28 @@ class Question extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getCorrectAnswer()
+    {
+        return $this->hasOne(Answer::className(), ['id' => 'correct_answer']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getTopic()
     {
         return $this->hasOne(Topic::className(), ['id' => 'topic_id']);
     }
-    
+
     public function upload($id)
     {
         $path_info = pathinfo($this->image->name);
+//    display_array($path_info);
+//    exit;
+        $this->image->saveAs('uploads/question/' . $id . '.' . $path_info['extension']);
 
-//        echo $path_info['extension']; // "bill"
-//        exit;
-        
-        $this->image->saveAs('uploads/question/' . $id . '.'.$path_info['extension']);
+        //$this->beneficiary_photograph->saveAs('uploads/beneficiary/' . $id . '.'.$path_info['extension']);
         return true;
+
     }
 }

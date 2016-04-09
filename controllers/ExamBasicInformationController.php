@@ -65,7 +65,9 @@ class ExamBasicInformationController extends Controller
     {
         $model = new ExamBasicInformation();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        
+        if ($model->load($_POST) && $model->save()) {
+            $this->savetopic();
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -74,6 +76,31 @@ class ExamBasicInformationController extends Controller
         }
     }
 
+    
+    public function savetopic()
+    {
+
+        if(isset($_POST['Topic']))
+        {
+            $Topics = $_POST['Topic'];
+            
+            for($i=0;$i<count($Topics);$i++)
+            {
+                $TopicsSingle = $Topics[$i];
+                
+                $TopicModel = new \app\models\Topic();
+                if(isset($TopicsSingle['Topic']['id']))
+                {
+                    $TopicModel = \app\models\Topic::find()->where(['id'=>$TopicsSingle['Topic']['id']])->one();
+                    
+                }
+                
+                $TopicModel->load($TopicsSingle);
+                $TopicModel->save();
+                
+            }
+        }
+    }
     
     
     /**
@@ -87,6 +114,7 @@ class ExamBasicInformationController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $this->savetopic();
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [

@@ -39,7 +39,7 @@ class Subject extends \yii\db\ActiveRecord
 
             //Subject Name validation
             ['subject_name', 'match' ,
-                'pattern'=> '/^[A-Za-z0-9_]+$/u',
+                'pattern'=> '/^[A-Za-z0-9_ ]+$/u',
                 'message'=> 'Subject Name can contain only [a-zA-Z0-9_].'],
 
             ['subject_name', 'unique','message'=>'Subject Name already exists!']

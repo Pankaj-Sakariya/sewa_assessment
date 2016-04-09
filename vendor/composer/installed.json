@@ -1008,6 +1008,60 @@
         ]
     },
     {
+<<<<<<< HEAD
+=======
+        "name": "kartik-v/yii2-widget-timepicker",
+        "version": "v1.0.1",
+        "version_normalized": "1.0.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/kartik-v/yii2-widget-timepicker.git",
+            "reference": "fa230caf281fbf6abea29a5dc1c28ebc005e4438"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/kartik-v/yii2-widget-timepicker/zipball/fa230caf281fbf6abea29a5dc1c28ebc005e4438",
+            "reference": "fa230caf281fbf6abea29a5dc1c28ebc005e4438",
+            "shasum": ""
+        },
+        "require": {
+            "kartik-v/yii2-krajee-base": "*"
+        },
+        "time": "2016-01-12 09:50:39",
+        "type": "yii2-extension",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "kartik\\time\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD 3-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Kartik Visweswaran",
+                "email": "kartikv2@gmail.com",
+                "homepage": "http://www.krajee.com/"
+            }
+        ],
+        "description": "Enhanced Yii2 wrapper for the bootstrap timepicker plugin (sub repo split from yii2-widgets)",
+        "homepage": "https://github.com/kartik-v/yii2-widget-timepicker",
+        "keywords": [
+            "bootstrap",
+            "extension",
+            "form",
+            "jquery",
+            "picker",
+            "plugin",
+            "time",
+            "widget",
+            "yii2"
+        ]
+    },
+    {
+>>>>>>> 84c70b676d06e67140b374f3a3f6067bddd39183
         "name": "phpspec/php-diff",
         "version": "v1.1.0",
         "version_normalized": "1.1.0.0",

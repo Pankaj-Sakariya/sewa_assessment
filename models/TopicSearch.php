@@ -57,13 +57,13 @@ class TopicSearch extends Topic
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'subject_id' => $this->subject_id,
+            //'subject_id' => $this->subject_id,
             'number_of_question_to_be_ask' => $this->number_of_question_to_be_ask,
             'is_active' => $this->is_active,
             'created_at' => $this->created_at,
             'modified_by' => $this->modified_by,
         ]);
-
+        $query->andFilterWhere(['like', 'subject_id', $this->subject_id]);
         $query->andFilterWhere(['like', 'topic_name', $this->topic_name]);
 
         return $dataProvider;

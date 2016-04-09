@@ -35,11 +35,21 @@ class ExamBasicInformation extends \yii\db\ActiveRecord
     {
         return [
             [['subject_id', 'no_of_question_for_exam', 'time_for_exam', 'exam_secret_code', 'is_active'], 'required'],
-            [['subject_id', 'no_of_question_for_exam','time_for_exam', 'is_active'], 'integer'],
-            [['time_for_exam', 'created_at', 'modified_by'], 'safe'],
+            [['subject_id', 'no_of_question_for_exam', 'is_active'], 'integer'],
+            [['time_for_exam', 'created_at', 'modified_by','time_for_exam'], 'safe'],
             [['exam_secret_code'], 'string', 'max' => 255],
-            [['exam_secret_code'], 'unique'],
-            [['subject_id'], 'exist', 'skipOnError' => true, 'targetClass' => Subject::className(), 'targetAttribute' => ['subject_id' => 'id']],
+            //[['exam_secret_code','subject_id'], 'unique'],
+           // [['subject_id'], 'exist', 'skipOnError' => true, 'targetClass' => Subject::className(), 'targetAttribute' => ['subject_id' => 'id']],
+           [['subject_id'],'unique','message'=>'Subject Name has already been taken.'],
+            [['exam_secret_code'],'unique','message'=>'Subject code has already been taken.'],
+//            ['subject_id', function ($attribute, $params) {
+//               $fetch = Subject::find()->where($this->subject_id)->all();
+////               display_array($fetch);
+////               exit;
+//                if (!$fetch($this->$attribute)) {
+//                    $this->addError($attribute, 'The token must contain letters or digits.');
+//                }
+//            }],
         ];
     }
 

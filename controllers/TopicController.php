@@ -8,7 +8,7 @@ use app\models\TopicSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
+ 
 /**
  * TopicController implements the CRUD actions for Topic model.
  */
@@ -61,9 +61,12 @@ class TopicController extends Controller
         $topicModel = Topic::find()->where(['is_active' => '1']);
         $topicModel->andFilterWhere(['LIKE', 'subject_id', '"' . $value . '"']);
         $topicModel = $topicModel->all();
+        //display_array($topicModel);
+        
+        
         ?>
 
-        <table id="table_topic" class="table table-bordered" xmlns="http://www.w3.org/1999/html">
+<table id="table_topic" class="table table-bordered" xmlns="http://www.w3.org/1999/html" >
         <thead>
         <tr>
             <th>
@@ -79,21 +82,37 @@ class TopicController extends Controller
         <?php
         $i =0;
         for ($ti = 0; $ti < count($topicModel); $ti++) {
+          //  display_array($topicModel[$ti]->id);
+            
             $topicModelSingle = $topicModel[$ti];
             ?>
             <tr>
+                <td style="display: none"  id = "topic_id-<?php echo $ti ?>">
+                    <?php echo $topicModelSingle->id; ?>
+                    <input name='Topic[<?php echo $ti ?>][Topic][id]' value="<?php echo $topicModelSingle->id ?>">
+                </td>
                 <td>
                     <?php echo $topicModelSingle->topic_name; ?>
                 </td>
                 <td>
-                    <input type="number" id = "number_of_question_to_be_ask" value="<?php echo $topicModelSingle->number_of_question_to_be_ask; ?>"class="form-control" onchange=number_of_question_changed()>
+                    <input name="Topic[<?php echo $ti ?>][Topic][number_of_question_to_be_ask]" type="number" id = "number_of_question_to_be_ask-<?php echo $ti ?>" value="<?php echo $topicModelSingle->number_of_question_to_be_ask; ?>"class="form-control" onchange="number_of_question_changed(this);load_total_questions();return false">
+                        <div id="error-<?php echo $ti ?>" class="error" style="color:red;"></div>
                 </td>
 
             </tr>
             <script>
-                function number_of_question_changed()
+                function load_total_questions()
                 {
-                    var select_val =document.getElementById("number_of_question_to_be_ask").value;
+                    var select_val =document.getElementById("container").innerHTML;
+                    if(select_val == 0)
+                    {
+                       
+                        select_val = "";
+                    }
+                    
+                    //alert(select_val);
+                    $("#exambasicinformation-no_of_question_for_exam").val(select_val);
+                    
                 }
 
             </script>
@@ -104,30 +123,151 @@ class TopicController extends Controller
             <?php
             }
            ?>
+            
            <tr>
-               <th>Total</th>
-               <th><?php echo $i ?></th>
+               <th onload="load_total_questions(),return false">Total Questions</th>
+               <th id="container"><?php if($i == "0"){ echo  "";}else {echo $i ;}?></th>
            </tr>
+            
         </table>
-
+        
+    <input type="hidden"id="number_of_rows" value="<?php echo $ti ?>"/>
+    <?php
+//    $i =0;
+//        for ($ti = 0; $ti < count($topicModel); $ti++) { ?>
+<!--    <input type="text"id="number_of_rows" value="<?php // echo $topicModel[$ti]->id; ?>"/>-->
+        <?php// }?>
         <script>
-
-
-            function number_of_question_changed() {
-
-
-//                $( '#table_topic' ).on( 'change' , 'input[type="number"]' ,function(){
-//                    alert( 'Event fired' );
-//                });
-               // alert("d"+document.getElementById("number_of_question_to_be_ask).value)
-                var no_of_question_for_exam =  document.getElementById("exambasicinformation-no_of_question_for_exam").value;
-               // alert(no_of_question_for_exam);
-              var select=  document.getElementById("number_of_question_to_be_ask").value;
-
-                alert( <?php echo "Total = ".$i;?> "," + no_of_question_for_exam);
-
+            
+            function number_of_question(mthis) {
+                
+                var no_of_question_exam = $("#exambasicinformation-no_of_question_for_exam").val();
+                var sum = 0;
+                var count = $("#number_of_rows").val();
+                
+                var sum  = 0;
+                for(var i=0;i<count;i++)
+                {
+//                    alert($("#number_of_question_to_be_ask-"+i).val());
+//                    if($("#number_of_question_to_be_ask-"+i).val()!="")
+//                    {
+                        sum = sum + parseInt($("#number_of_question_to_be_ask-"+i).val());
+//                    }
+                }
+//                alert(no_of_question_exam);
+//                alert(sum);
+                
+               
+                 
+                if(no_of_question_exam > sum)
+                {
+                   var message =("You can add maximum "+sum+ " questions for this subject, Or Add more questions in question bank.");
+               
+                }
+//                else if(no_of_question_exam < sum)
+//                {
+//                    alert("Please enter proper number of questions for exam LESS THAN");
+//                }
+                else if(no_of_question_exam == sum)
+                {
+                   var message =("equal");
+                }
+                else
+                {
+                   var message =("else part:");
+                }
+                
+                
             }
+ 
 
+            function number_of_question_changed(mthis) {
+                
+                var no_of_question_exam = $("#exambasicinformation-no_of_question_for_exam").val();
+               // alert(no_of_question_exam);
+                var valueee = mthis.id;
+                var textvalue = mthis.value;
+               
+                var sp = valueee.split("-");
+                //alert(sp[1]);
+                
+//                 var topic_id = $("#topic_id-"+sp[1]).val();
+                   var topic_id_name = "topic_id-"+sp[1];
+                 
+                // alert(topic_id_name);
+                 
+                  var topic_id =($("#topic_id-"+sp[1]).html()).trim();
+                  
+                 
+                 //alert(topic_id);
+              
+
+                var count = $("#number_of_rows").val();
+                
+                           
+                var sum = 0;
+                for(var i=0;i<count;i++)
+                {
+                   var sum = sum + parseInt($("#number_of_question_to_be_ask-"+i).val());
+                }
+               
+//                alert(sum);
+//                
+//                   
+//                  if(no_of_question_exam == sum)
+//                        {
+//
+//                            alert("equal");
+//                        }
+//                    else if(no_of_question_exam < sum)
+//                        {
+//
+//                            alert("Please enter proper number of questions for exam LESS THAN");
+//                        }
+//                    
+                
+                    $("#container").html(sum);
+                    
+                    
+                   // alert(no_of_question_exam);
+                    
+                     $.ajax({
+
+                type: 'GET',
+                url: '<?php echo \yii\helpers\Url::to(["question/question-count"]) ?>',
+                data: {'topic_id': topic_id ,'textvalue':textvalue , 'textbox_id':valueee },
+                success: function(data) {
+                     var select = JSON.parse(data);
+//                    alert(select['message']);
+                    
+                    if(select['status']==0)
+                    {
+                        $("#number_of_question_to_be_ask-"+sp[1]).val("");
+                        $("#error-"+sp[1]).html(select['message']);
+                        $("#number_of_question_to_be_ask-"+sp[1]).focus();
+                        $("#container").html("");
+                        $("#exambasicinformation-no_of_question_for_exam").val("");
+                    }
+                    else
+                    {
+                        $("#error-"+sp[1]).html("");
+                    }
+                    
+                    
+                   //var mdata = JSON:decode(data);
+                  // var mdata = JSON:Parser(data);
+                    // alert(mdata['message']);
+                     
+                   // $("#"+container).html(data);
+
+
+                }
+            });
+                
+            }
+         
+         
+         
 
         </script>
 

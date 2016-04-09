@@ -32,9 +32,9 @@ use kartik\select2\Select2;
 
     <?= $form->field($model, 'topic_name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'number_of_question_to_be_ask')->textInput() ?>
+ <!--<?php //$form->field($model, 'number_of_question_to_be_ask')->textInput() ?>-->
 
-    <?php $model->is_active = '0'; ?>
+    <?php $model->isNewRecord ? $model->is_active = 0: $model->is_active = $model->is_active ;  ?>
     <?= $form->field($model, 'is_active')->radioList(['1' => 'Active', 0 => 'InActive'])->label(''); ?>
 
 

@@ -21,11 +21,11 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'question_name') ?>
 
-    <?= $form->field($model, 'image') ?>
-
     <?= $form->field($model, 'weightage_for_question') ?>
 
-    <?php // echo $form->field($model, 'number_of_answer') ?>
+    <?= $form->field($model, 'number_of_answer') ?>
+
+    <?php // echo $form->field($model, 'correct_answer') ?>
 
     <?php // echo $form->field($model, 'is_active') ?>
 
