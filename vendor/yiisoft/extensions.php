@@ -75,4 +75,13 @@ return array (
       '@kartik/select2' => $vendorDir . '/kartik-v/yii2-widget-select2',
     ),
   ),
+  'kartik-v/yii2-widget-timepicker' => 
+  array (
+    'name' => 'kartik-v/yii2-widget-timepicker',
+    'version' => '1.0.1.0',
+    'alias' => 
+    array (
+      '@kartik/time' => $vendorDir . '/kartik-v/yii2-widget-timepicker',
+    ),
+  ),
 );

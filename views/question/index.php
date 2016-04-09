@@ -18,6 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a('Create Question', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
+
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -25,16 +26,35 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'topic_id',
+            
+            [
+                'attribute'=>'topic_id',
+                'content'=>function($data){
+                    $value = \app\models\Topic::find()->where(['id'=>$data->topic_id])->one();
+//                    display_array($value);
+                    $final_value= $value!='null'?$value:'';
+                    return $final_value->topic_name;
+
+//                    return  check_active_status($data);
+                }
+            ],
+            
+           // 'topic_id',
             'question_name:ntext',
-            'image',
             'weightage_for_question',
-            // 'number_of_answer',
-            // 'is_active',
+            //'number_of_answer',
+            // 'correct_answer',
+            [
+                'attribute'=>'is_active',
+                'content'=>function($data){
+                  return  check_active_status($data);
+                }
+            ],
             // 'created_at',
             // 'modified_by',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
+
 </div>

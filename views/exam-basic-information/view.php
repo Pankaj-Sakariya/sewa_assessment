@@ -44,7 +44,11 @@ $this->params['breadcrumbs'][] = $this->title;
             'no_of_question_for_exam',
             'time_for_exam',
             'exam_secret_code',
-            'is_active',
+            //            'is_active',
+            [
+                'attribute'=>'is_active',
+                'value' => check_active_status($model)
+            ],
             'created_at',
             'modified_by',
         ],

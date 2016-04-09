@@ -25,16 +25,31 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </p>
 
+    
+    <?php 
+    
+    
+    
+    $topicM = \app\models\Topic::find()->where(['id'=>$model->topic_id])->one();
+    $topic_name = $topicM !=null?$topicM->topic_name:"";
+    ?>
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
             'id',
-            'topic_id',
+            
+            [  
+                'attribute'=>'topic_id',
+                'value'=>$topic_name
+            ],
+           // 'topic_id',
             'question_name:ntext',
-            'image',
             'weightage_for_question',
-            'number_of_answer',
-            'is_active',
+            //'number_of_answer',
+            [
+                'attribute'=>'is_active',
+                'value' => check_active_status($model)
+            ],
             'created_at',
             'modified_by',
         ],

@@ -18,8 +18,8 @@ class QuestionSearch extends Question
     public function rules()
     {
         return [
-            [['id', 'topic_id', 'weightage_for_question', 'number_of_answer', 'is_active'], 'integer'],
-            [['question_name', 'image', 'created_at', 'modified_by'], 'safe'],
+            [['id', 'weightage_for_question','is_active'], 'integer'],
+            [['question_name', 'created_at', 'modified_by','topic_id'], 'safe'],
         ];
     }
 
@@ -43,8 +43,6 @@ class QuestionSearch extends Question
     {
         $query = Question::find();
 
-        // add conditions that should always apply here
-
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -57,19 +55,23 @@ class QuestionSearch extends Question
             return $dataProvider;
         }
 
-        // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'topic_id' => $this->topic_id,
+           // 'topic_id' => $this->topic_id,
             'weightage_for_question' => $this->weightage_for_question,
-            'number_of_answer' => $this->number_of_answer,
+           // 'number_of_answer' => $this->number_of_answer,
+           // 'correct_answer' => $this->correct_answer,
             'is_active' => $this->is_active,
             'created_at' => $this->created_at,
             'modified_by' => $this->modified_by,
         ]);
 
-        $query->andFilterWhere(['like', 'question_name', $this->question_name])
-            ->andFilterWhere(['like', 'image', $this->image]);
+        $query->andFilterWhere(['like', 'question_name', $this->question_name]);
+        
+//         $topicname =  Topic::find()->where('topic_name');
+//         display_array($topicname);
+//         exit;
+        $query->andFilterWhere(['like', 'topic_id', $this->topic_id]);
 
         return $dataProvider;
     }
